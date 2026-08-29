@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>⚡ Black 1 - 4D Glass</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="glass-overlay"></div>
+
+<!-- ===== APP CONTAINER ===== -->
+<div class="app-container" id="appContainer">
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="header-top">
+            <div class="header-left">
+                <button class="menu-btn" onclick="toggleSideMenu()"><i class="fas fa-bars"></i></button>
+                <div class="logo-wrapper">
+                    <div class="logo-icon">
+                        <div class="ring"></div>
+                        <div class="ring2"></div>
+                        <div class="inner-icon"><i class="fas fa-bolt"></i></div>
+                    </div>
+                    <div class="logo-text">
+                        <span class="main">Black 1</span>
+                        <span class="sub">✦ 4D ✦</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-center" style="position:relative;">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 بحث عن مستخدمين..." onkeyup="searchUsers()">
+                    <button onclick="searchUsers()"><i class="fas fa-search"></i></button>
+                </div>
+                <div id="searchResults" style="position:absolute;top:100%;left:0;right:0;z-index:1000;margin-top:4px;display:none;"></div>
+                <button class="voice-btn" id="voiceBtn" onclick="startVoiceSearch()">
+                    <i class="fas fa-microphone"></i>
+                    <span class="recording-dot"></span>
+                </button>
+            </div>
+            <div class="header-right">
+                <button class="btn live-btn" id="liveBtn" onclick="startLiveStream()" title="بث مباشر">
+                    <i class="fas fa-circle" style="color:var(--primary);"></i>
+                </button>
+                <button class="btn" onclick="openRewards()" title="مكافآت"><i class="fas fa-gem"></i></button>
+                <button class="btn" onclick="openTelegram()" id="msgBtn" title="رسائل">
+                    <i class="fas fa-comment-dots"></i>
+                    <span class="badge" id="msgBadge">0</span>
+                </button>
+                <button class="btn" onclick="startCall()" title="اتصال"><i class="fas fa-phone"></i></button>
+                <button class="btn" onclick="toggleDarkMode()" title="الوضع الليلي" id="darkModeBtn">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="avatar-btn" onclick="switchToProfile()" title="ملفي" id="headerAvatar">⚫</button>
+            </div>
+        </div>
+        <div class="header-bottom">
+            <button class="btn upload-btn" onclick="openUpload()" title="رفع فيديو"><i class="fas fa-upload"></i> فيديو</button>
+            <button class="btn upload-btn" onclick="openImageUpload()" title="رفع صورة"><i class="fas fa-image"></i> صورة</button>
+            <button class="btn" onclick="switchToHome()" title="الرئيسية"><i class="fas fa-home"></i></button>
+            <button class="btn" onclick="switchToProfile()" title="ملفي"><i class="fas fa-user"></i></button>
+            <button class="btn" onclick="openTofo()" title="TOFO"><i class="fas fa-fire"></i> TOFO</button>
+        </div>
+    </header>
+
+    <!-- ===== SIDE MENU ===== -->
+    <div class="side-menu-overlay" id="sideMenuOverlay">
+        <div class="side-menu">
+            <button class="close-menu" onclick="toggleSideMenu()"><i class="fas fa-times"></i> إغلاق</button>
+            
+            <div id="userMenuSection" style="display:none;">
+                <div class="menu-header">
+                    <div class="avatar" id="sideAvatar">⚫</div>
+                    <div class="info">
+                        <div class="name" id="sideName">مستخدم</div>
+                        <div class="handle" id="sideHandle">@مستخدم</div>
+                    </div>
+                </div>
+                <div class="menu-item" onclick="switchToHome(); toggleSideMenu();"><i class="fas fa-home"></i> الرئيسية</div>
+                <div class="menu-item" onclick="switchToProfile(); toggleSideMenu();"><i class="fas fa-user"></i> ملفي الشخصي</div>
+                <div class="menu-item" onclick="openTelegram(); toggleSideMenu();"><i class="fas fa-comment-dots"></i> الرسائل</div>
+                <div class="menu-item" onclick="openTofo(); toggleSideMenu();"><i class="fas fa-fire"></i> TOFO</div>
+                <div class="menu-item upload-btn" onclick="openUpload(); toggleSideMenu();"><i class="fas fa-upload"></i> رفع فيديو</div>
+                <div class="menu-item upload-btn" onclick="openImageUpload(); toggleSideMenu();"><i class="fas fa-image"></i> رفع صورة</div>
+                <div class="menu-item" onclick="openRewards(); toggleSideMenu();"><i class="fas fa-gem"></i> المكافآت</div>
+                <div class="menu-item live-btn" onclick="startLiveStream(); toggleSideMenu();"><i class="fas fa-circle" style="color:var(--primary);"></i> بث مباشر</div>
+                <div class="menu-divider"></div>
+                <div class="menu-item" onclick="openSettings(); toggleSideMenu();"><i class="fas fa-cog"></i> الإعدادات</div>
+                <div class="menu-item" onclick="toggleDarkMode(); toggleSideMenu();"><i class="fas fa-moon"></i> الوضع الليلي</div>
+                <div class="menu-item" onclick="logoutUser(); toggleSideMenu();" style="color:var(--primary);"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</div>
+            </div>
+
+            <div id="loginMenuSection">
+                <div class="menu-header">
+                    <div class="avatar">🔐</div>
+                    <div class="info">
+                        <div class="name">تسجيل الدخول</div>
+                        <div class="handle">للوصول إلى جميع الميزات</div>
+                    </div>
+                </div>
+                <div class="menu-item" onclick="openLoginModal()"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</div>
+                <div class="menu-item" onclick="openRegisterModal()"><i class="fas fa-user-plus"></i> إنشاء حساب جديد</div>
+                <div class="menu-item" onclick="toggleDarkMode(); toggleSideMenu();"><i class="fas fa-moon"></i> الوضع الليلي</div>
+            </div>
+
+            <div class="menu-divider"></div>
+            <div class="menu-footer">
+                <div style="font-size:10px;color:rgba(0,0,0,0.1);text-align:center;padding:6px 0;">Black 1 v7.0 ✦ 4D Glass</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN ===== -->
+    <div class="main-content">
+        <div class="sidebar">
+            <button class="sidebar-item active" onclick="switchToHome(this)"><i class="fas fa-home"></i><span>الرئيسية</span></button>
+            <button class="sidebar-item" onclick="switchToProfile(this)"><i class="fas fa-user"></i><span>ملفي</span></button>
+            <button class="sidebar-item" onclick="openTofo()"><i class="fas fa-fire" style="color:var(--primary);"></i><span>TOFO</span></button>
+        </div>
+
+        <div class="content">
+            <div id="homeContent">
+                <div class="tabs">
+                    <button class="tab active" onclick="filterMedia('all',this)">الكل</button>
+                    <button class="tab" onclick="filterMedia('recent',this)">أحدث</button>
+                    <button class="tab" onclick="filterMedia('popular',this)">الأكثر مشاهدة</button>
+                    <button class="tab" onclick="filterMedia('video',this)">فيديوهات</button>
+                    <button class="tab" onclick="filterMedia('image',this)">صور</button>
+                </div>
+                <div class="video-grid" id="mediaGrid">
+                    <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:rgba(0,0,0,0.1);">
+                        <i class="fas fa-photo-video" style="font-size:56px;opacity:0.1;margin-bottom:16px;display:block;"></i>
+                        <p style="font-size:20px;">مرحباً بك في Black 1</p>
+                        <p style="font-size:14px;color:rgba(0,0,0,0.05);">سجل دخولك لمشاهدة المحتوى ونشر الفيديوهات</p>
+                        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px;">
+                            <button onclick="openLoginModal()" style="padding:10px 30px;background:#ff0040;color:#fff;border:none;border-radius:30px;font-size:16px;font-weight:700;cursor:pointer;">تسجيل الدخول</button>
+                            <button onclick="openRegisterModal()" style="padding:10px 30px;background:#1DA1F2;color:#fff;border:none;border-radius:30px;font-size:16px;font-weight:700;cursor:pointer;">إنشاء حساب</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="profileContent" style="display:none;">
+                <div class="profile-header">
+                    <div class="big-avatar" id="profileAvatar" onclick="document.getElementById('avatarInput').click()">⚫</div>
+                    <div class="info">
+                        <div class="name" id="profileName">مستخدم</div>
+                        <div class="handle" id="profileHandle">@مستخدم</div>
+                        <div class="bio" id="profileBio">⚡ مستخدم على Black 1</div>
+                        <div class="stats">
+                            <span><i class="fas fa-users"></i> <span id="subCount">0</span> مشترك</span>
+                            <span><i class="fas fa-heart"></i> <span id="likeCount">0</span></span>
+                            <span><i class="fas fa-video"></i> <span id="mediaCount">0</span> منشور</span>
+                        </div>
+                        <div class="profile-buttons">
+                            <button class="btn btn-primary" onclick="subscribeChannel()">اشتراك</button>
+                            <button class="btn" onclick="openEditProfile()"><i class="fas fa-edit"></i> تعديل</button>
+                            <button class="btn" onclick="openSettings()"><i class="fas fa-cog"></i> الإعدادات</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-tabs">
+                    <button class="tab active" onclick="filterProfileMedia('all',this)">الرئيسية</button>
+                    <button class="tab" onclick="filterProfileMedia('videos',this)">فيديوهات</button>
+                    <button class="tab" onclick="filterProfileMedia('images',this)">صور</button>
+                    <button class="tab" onclick="filterProfileMedia('liked',this)"><i class="fas fa-heart" style="color:var(--primary);"></i> أعجبتك</button>
+                </div>
+                <div class="video-grid" id="profileMediaGrid">
+                    <div style="grid-column:1/-1;text-align:center;padding:40px 16px;color:rgba(0,0,0,0.05);font-size:18px;">
+                        <i class="fas fa-photo-video" style="font-size:44px;opacity:0.05;margin-bottom:12px;display:block;"></i>
+                        <p>لا يوجد منشورات</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== TOFO PAGE ===== -->
+<div class="tofo-page" id="tofoPage">
+    <div class="tofo-header">
+        <button class="back-btn" onclick="closeTofo()"><i class="fas fa-arrow-right"></i> رجوع</button>
+        <h2><i class="fas fa-fire" style="color:var(--primary);"></i> TOFO</h2>
+        <button class="new-post-btn" onclick="openNewTofoPost()"><i class="fas fa-plus"></i> نشر جديد</button>
+    </div>
+    <div class="tofo-body">
+        <div class="tofo-feed" id="tofoFeed">
+            <div style="padding:40px;text-align:center;color:rgba(0,0,0,0.1);font-size:18px;">
+                <i class="fas fa-fire" style="font-size:44px;opacity:0.1;margin-bottom:12px;display:block;"></i>
+                لا توجد منشورات في TOFO
+            </div>
+        </div>
+        <div class="tofo-sidebar">
+            <div class="trending">
+                <h3>🔥 الأكثر تداولاً</h3>
+                <div class="tag"><i class="fas fa-hashtag"></i> viral <span class="num">2.4M</span></div>
+                <div class="tag"><i class="fas fa-hashtag"></i> fyp <span class="num">1.2M</span></div>
+                <div class="tag"><i class="fas fa-hashtag"></i> nice <span class="num">890K</span></div>
+            </div>
+            <div class="community">
+                <h3>👥 المجتمع</h3>
+                <div class="item"><i class="fas fa-users"></i> أتابعه <span id="followingCount">0</span></div>
+                <div class="item"><i class="fas fa-user-plus"></i> المتابعون <span id="followersCount">0</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== TIKTOK PAGE ===== -->
+<div class="tiktok-page" id="tiktokPage">
+    <button class="close-tt" onclick="closeTiktok()"><i class="fas fa-times"></i></button>
+    <div class="tt-content" id="ttContent">
+        <video id="ttVideo" controls autoplay></video>
+        <img id="ttImage" style="display:none;" alt="">
+    </div>
+    <div class="tt-info">
+        <div>
+            <div class="title" id="ttTitle">عنوان</div>
+            <div class="uploader" id="ttUploader">المستخدم</div>
+        </div>
+        <div style="display:flex;gap:14px;font-size:15px;color:rgba(255,255,255,0.4);">
+            <span><i class="fas fa-eye"></i> <span id="ttViews">0</span></span>
+            <span style="cursor:pointer;" onclick="likeTt()"><i class="fas fa-heart" id="ttLikeIcon"></i> <span id="ttLikes">0</span></span>
+        </div>
+    </div>
+</div>
+
+<!-- ===== PLUS MESSENGER PAGE ===== -->
+<div class="telegram-page" id="telegramPage">
+    <div class="tg-header">
+        <button class="back-btn" onclick="closeTelegram()"><i class="fas fa-arrow-right"></i> رجوع</button>
+        <h2><i class="fas fa-comment-dots"></i> الرسائل</h2>
+        <button class="new-btn" onclick="focusTelegramPeopleSearch()"><i class="fas fa-pen"></i> جديد</button>
+    </div>
+    
+    <div class="tg-search-container">
+        <div class="tg-search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="tgSearch" placeholder="🔍 ابحث عن محادثة أو مستخدم..." oninput="searchTelegramDirectory()">
+        </div>
+        <div id="tgDirectory" class="tg-directory"></div>
+    </div>
+    
+    <div class="tg-list" id="tgList">
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 16px;color:rgba(0,0,0,0.05);">
+            <i class="fas fa-comment-slash" style="font-size:48px;opacity:0.05;margin-bottom:16px;"></i>
+            <p style="font-size:18px;color:rgba(0,0,0,0.1);">لا توجد محادثات</p>
+        </div>
+    </div>
+    
+    <div class="tg-chat" id="tgChat">
+        <div class="chat-header">
+            <button class="back-btn" onclick="closeTgChat()"><i class="fas fa-arrow-right"></i></button>
+            <div class="avatar" id="tgChatAvatar">👤</div>
+            <span class="name" id="tgChatName">المستخدم</span>
+            <span class="online-status" id="tgChatStatus">🟢 متصل</span>
+        </div>
+        <div class="chat-messages" id="tgChatMessages"></div>
+        <div class="chat-input">
+            <button class="attach-btn" onclick="showNotification('📎 إرفاق ملف')"><i class="fas fa-paperclip"></i></button>
+            <input type="text" id="tgChatInput" placeholder="اكتب رسالة..." onkeypress="if(event.key==='Enter') sendTgMessage()">
+            <button class="send-btn" onclick="sendTgMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== TOFO NEW POST MODAL ===== -->
+<div class="modal-overlay" id="newTofoPostModal">
+    <div class="modal-content">
+        <h2><i class="fas fa-fire"></i> منشور جديد</h2>
+        <textarea id="tofoPostText" rows="3" placeholder="ماذا تريد أن تنشر؟" style="width:100%;padding:10px;border-radius:16px;border:1px solid var(--glass-border);background:rgba(255,255,255,0.2);color:var(--text-primary);font-size:15px;outline:none;"></textarea>
+        <div class="upload-area" onclick="document.getElementById('tofoImageInput').click()" style="margin:8px 0;">
+            <i class="fas fa-image"></i>
+            <p>أضف صورة (اختياري)</p>
+        </div>
+        <input type="file" id="tofoImageInput" accept="image/*" style="display:none;" onchange="handleTofoImage(event)">
+        <div id="tofoImagePreview" style="display:none;margin:6px 0;position:relative;">
+            <img id="tofoImagePreviewImg" style="max-width:100%;max-height:150px;border-radius:12px;">
+            <button onclick="removeTofoImage()" style="position:absolute;top:4px;right:4px;background:var(--primary);color:#fff;border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;font-size:12px;">×</button>
+        </div>
+        <button class="btn btn-primary" onclick="publishTofoPost()"><i class="fas fa-check"></i> نشر</button>
+        <button class="btn" onclick="closeNewTofoPost()">إلغاء</button>
+    </div>
+</div>
+
+<!-- ===== LOGIN MODAL ===== -->
+<div class="modal-overlay" id="loginModal">
+    <div class="modal-content">
+        <h2><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</h2>
+        <input type="text" id="loginUsername" placeholder="اسم المستخدم" style="width:100%;padding:10px;margin:6px 0;border-radius:30px;border:1px solid var(--glass-border);background:rgba(255,255,255,0.2);color:var(--text-primary);font-size:15px;outline:none;">
+        <input type="password" id="loginPassword" placeholder="كلمة المرور" style="width:100%;padding:10px;margin:6px 0;border-radius:30px;border:1px solid var(--glass-border);background:rgba(255,255,255,0.2);color:var(--text-primary);font-size:15px;outline:none;">
+        <button class="btn btn-primary" onclick="loginUser()"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</button>
+        <button class="btn" onclick="openRegisterModal()"><i class="fas fa-user-plus"></i> إنشاء حساب جديد</button>
+        <button class="btn" onclick="closeLoginModal()">إلغاء</button>
+    </div>
+</div>
+
+<!-- ===== REGISTER MODAL ===== -->
+<div class="modal-overlay" id="registerModal">
+    <div class="modal-content">
+        <h2><i class="fas fa-user-plus"></i> إنشاء حساب جديد</h2>
+        <input type="text" id="registerUsername" placeholder="اسم المستخدم" style="width:100%;padding:10px;margin:6px 0;border-radius:30px;border:1px solid var(--glass-border);background:rgba(255,255,255,0.2);color:var(--text-primary);font-size:15px;outline:none;">
+        <input type="password" id="registerPassword" placeholder="كلمة المرور (6 أحرف على الأقل)" style="width:100%;padding:10px;margin:6px 0;border-radius:30px;border:1px solid var(--glass-border);background:rgba(255,255,255,0.2);color:var(--text-primary);font-size:15px;outline:none;">
+        <button class="btn btn-primary" onclick="registerUser()"><i class="fas fa-user-plus"></i> إنشاء حساب</button>
+        <button class="btn" onclick="closeRegisterModal()">إلغاء</button>
+    </div>
+</div>
+
+<!-- ===== EDIT PROFILE ===== -->
+<div class="edit-profile-overlay" id="editProfileOverlay">
+    <div class="edit-profile-box">
+        <div class="edit-header">
+            <button class="close-edit" onclick="closeEditProfile()"><i class="fas fa-times"></i></button>
+            <h2><i class="fas fa-user-edit"></i> تعديل الملف</h2>
+        </div>
+        <div class="avatar-edit">
+            <div class="big-avatar" id="editAvatar" onclick="document.getElementById('avatarInputEdit').click()">⚫</div>
+            <input type="file" id="avatarInputEdit" accept="image/*" style="display:none;" onchange="handleAvatarEdit(event)">
+            <div class="hint">اضغط لتغيير الصورة</div>
+        </div>
+        <label>الاسم</label>
+        <input type="text" id="editName" placeholder="الاسم" value="مستخدم">
+        <label>نبذة</label>
+        <textarea id="editBio" rows="2" placeholder="نبذة عنك">⚡ مستخدم على Black 1</textarea>
+        <button class="save-btn" onclick="saveEditProfile()"><i class="fas fa-save"></i> حفظ التغييرات</button>
+    </div>
+</div>
+
+<!-- ===== UPLOAD MODALS ===== -->
+<div class="modal-overlay" id="uploadModal">
+    <div class="modal-content">
+        <h2><i class="fas fa-upload"></i> رفع فيديو</h2>
+        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <p>اضغط لاختيار فيديو</p>
+        </div>
+        <input type="file" id="fileInput" accept="video/*" style="display:none;" onchange="handleUpload(event, 'video')">
+        <input type="text" id="videoTitleInput" placeholder="عنوان الفيديو">
+        <select id="videoQuality" style="width:100%;padding:10px 14px;border-radius:30px;border:1px solid var(--glass-border);background:rgba(255,255,255,0.2);color:var(--text-primary);font-size:14px;outline:none;margin:4px 0;">
+            <option value="4K">4K Ultra HD</option>
+            <option value="2K">2K QHD</option>
+            <option value="HDR" selected>HDR</option>
+            <option value="1080p">1080p Full HD</option>
+        </select>
+        <button class="btn btn-primary" onclick="confirmUpload('video')"><i class="fas fa-check"></i> نشر</button>
+        <button class="btn" onclick="document.getElementById('uploadModal').classList.remove('active')">إلغاء</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="imageUploadModal">
+    <div class="modal-content">
+        <h2><i class="fas fa-image"></i> رفع صورة</h2>
+        <div class="upload-area" onclick="document.getElementById('imageInput').click()">
+            <i class="fas fa-cloud-upload-alt</i>
+            <p>اضغط لاختيار صورة</p>
+        </div>
+        <input type="file" id="imageInput" accept="image/*" style="display:none;" onchange="handleUpload(event, 'image')">
+        <input type="text" id="imageTitleInput" placeholder="عنوان الصورة">
+        <button class="btn btn-primary" onclick="confirmUpload('image')"><i class="fas fa-check"></i> نشر</button>
+        <button class="btn" onclick="document.getElementById('imageUploadModal').classList.remove('active')">إلغاء</button>
+    </div>
+</div>
+
+<!-- ===== LIVE OVERLAY ===== -->
+<div class="live-overlay" id="liveOverlay">
+    <video id="liveVideo" autoplay muted playsinline></video>
+    <div class="live-info">
+        <div class="live-tag"><span class="dot"></span> بث مباشر</div>
+        <div class="viewers"><i class="fas fa-eye"></i> <span id="viewerCount">0</span></div>
+    </div>
+    <div class="live-actions">
+        <button class="end-btn" onclick="endLiveStream()"><i class="fas fa-stop"></i> إنهاء البث</button>
+    </div>
+</div>
+
+<!-- ===== NOTIFICATION ===== -->
+<div class="notification" id="notification">
+    <span class="notif-icon">🔔</span>
+    <span class="notif-text" id="notifText">جديد!</span>
+</div>
+
+<!-- ===== Firebase + Scripts ===== -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+<script src="https://unpkg.com/peerjs@1.5.1/dist/peerjs.min.js"></script>
+<script src="firebase-config.js"></script>
+<script src="auth.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
